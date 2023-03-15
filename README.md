@@ -4,7 +4,7 @@
     <br/>
     ❗
     <br />
-    package-template
+    rexample
     <br />
     <br />
     <br />
@@ -12,14 +12,9 @@
   </h1>
   <sup>
     <br />
-    Template project to build a new NPM package using TypeScript</em>
+    Simple CLI to execute & run scripts</em>
     <br />
     <br />
-  
-[![Package Version](https://img.shields.io/npm/v/package-template?label=%20&style=for-the-badge)](https://www.npmjs.com/package/package-template)
-[![Package Monthly Downloads](https://img.shields.io/npm/dm/package-template?color=blue&label=%20&style=for-the-badge)](https://www.npmjs.com/package/package-template)
-[![Docs](https://img.shields.io/badge/-Docs-blue.svg?style=for-the-badge)](https://github.com/nurodev/package-template)
-
   </sup>
   <br />
   <br />
@@ -27,25 +22,48 @@
 
 ## 🚀 Install
 
-Install it locally in your project
+You have a few options to install the CLI:
 
 ```bash
-# npm
-npm install package-template
+# Locally
+npm install --save-dev rexample
 
-# yarn
-yarn add package-template
+# Globally
+npm install -g rexample
 
-# pnpm
-pnpm install package-template
+# npx
+npx rexample
 ```
 
 ## 🦄 Usage
 
-```typescript
-// ESM
-import { } from 'package-template'
+To get started using the CLI simply create a new example script you want to run.
 
-// CommonJS
-const { } = require('package-template')
+The only requirement is that the script exports a default function to execute. The reason for this is due to avoid module import automatic code execution.
+
+For example, here is a basic script that will log "Hello world!" to the console:
+
+```typescript
+// examples/basic.ts
+function main() {
+  console.log("Hello world!");
+}
+
+export default main;
+```
+
+Then simply run the CLI, either by passing in the name of the file or by selecting it from the list:
+
+```bash
+# Run the CLI & select a script to run
+rexample
+
+# Run the CLI using a provided script name
+rexample <script>
+```
+
+And you will get the the output of your selected script:
+
+```bash
+Hello world!
 ```
