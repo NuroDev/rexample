@@ -1,38 +1,32 @@
 {
-  "name": "typescript-lib",
-  "version": "0.1.1",
-  "description": "Project template to bootstrap a new TypeScript library",
+  "name": "rexample",
+  "version": "1.0.1",
+  "description": "Simple CLI to execute & run scripts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nurodev/typescript-lib.git"
+    "url": "https://github.com/nurodev/rexample.git"
   },
-  "homepage": "https://github.com/nurodev/typescript-lib",
-  "bugs": "https://github.com/nurodev/typescript-lib/issues",
+  "homepage": "https://github.com/nurodev/rexample",
+  "bugs": "https://github.com/nurodev/rexample/issues",
   "author": {
     "name": "nurodev",
     "email": "me@nuro.dev",
     "url": "https://nuro.dev"
   },
   "keywords": [
+    "example",
+    "examples",
+    "cli",
     "typescript"
   ],
   "license": "MIT",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist/**/*",
-    "LICENSE",
-    "README.md"
-  ],
+  "bin": {
+    "rexample": "dist/index.js"
+  },
   "scripts": {
-    "coverage": "vitest run --coverage",
     "dev": "yarn build --watch",
     "build": "rimraf dist && tsup",
-    "build:prod": "cross-env NODE_ENV=production yarn build",
-    "test": "vitest run",
-    "test:watch": "vitest watch",
-    "test:ui": "vitest watch --ui"
+    "build:prod": "cross-env NODE_ENV=production yarn build"
   },
   "dependencies": {
     "prompts": "^2.4.2"
