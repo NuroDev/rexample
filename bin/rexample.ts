@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 import esbuild from "esbuild";
 import prompts from "prompts";
 import { capitalize } from "radash";
