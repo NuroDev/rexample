@@ -1,12 +1,10 @@
-import fs from "fs";
+import esbuild from "esbuild";
+import { readdirSync, readFileSync } from "fs";
 import prompts from "prompts";
-import { exec } from "child_process";
-import { join } from "path";
-import { promisify } from "util";
+import { join, parse as parsePath } from "path";
 
 import type { Choice } from "prompts";
-
-const execAsync = promisify(exec);
+import type { ParsedPath } from "path";
 
 async function main() {
   const cwd = process.cwd();
@@ -14,43 +12,52 @@ async function main() {
   // TODO: Check if an examples directory already exists.
 
   const examplesDirectoryPath = join(cwd, "examples");
-  const exampleFiles = fs
-    .readdirSync(examplesDirectoryPath)
+  const exampleFiles = readdirSync(examplesDirectoryPath)
     .filter((i) => i.endsWith(".ts")) // TODO: Support .js, .mjs, .cjs, etc.
-    .map((i) => i.replace(".ts", ""));
+    .map((i) => parsePath(join(examplesDirectoryPath, i)));
 
   // TODO: If no examples, exit early with a warning.
 
-  const choices: Array<Choice> = await Promise.all(
-    exampleFiles.map(async (key) => {
-      const exampleFilePath = join(cwd, "examples", key);
-      const module = await import(exampleFilePath);
-
-      return {
-        description: module.description || key,
-        title: module.title || key,
-        value: key,
-      };
+  const choices = exampleFiles.map(
+    (file): Choice => ({
+      description: join("examples", file.base),
+      title: file.name,
+      value: file,
     })
   );
 
   try {
-    const { fn } = await prompts({
+    const { rawPath } = await prompts({
       choices,
       message: "Run example",
-      name: "fn",
+      name: "rawPath",
       type: "autocomplete",
     });
-    if (!fn) return; // TODO: Better handling of this error.
+    if (!rawPath) return; // TODO: Better handling of this error.
 
-    // TODO: Investigate if there's a better way to stream the execution output to the console.
-    // TODO: Look into calling `tsx` pragmatically instead of using `exec`.
-    const { stderr, stdout } = await execAsync(
-      `tsx ${join(cwd, "examples", fn)}`
+    const path = rawPath as ParsedPath;
+    const absolutePath = join(path.dir, path.base);
+
+    const { code } = await esbuild.transform(
+      readFileSync(absolutePath, "utf-8"),
+      {
+        format: "cjs",
+        loader: "jsx",
+      }
     );
-    console.log(stdout || stderr);
-  } catch (e) {
-    process.exit(1);
+
+    const builtModule = await esbuild.build({
+      format: "cjs",
+      stdin: {
+        contents: code,
+      },
+      write: false,
+    });
+
+    const { default: mainFunc } = eval(builtModule.outputFiles![0].text);
+    await mainFunc();
+  } catch (error) {
+    throw error;
   }
 }
 
