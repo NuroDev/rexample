@@ -57,9 +57,6 @@ Then simply run the CLI, either by passing in the name of the file or by selecti
 ```bash
 # Run the CLI & select a script to run
 rexample
-
-# Run the CLI using a provided script name
-rexample <script>
 ```
 
 And you will get the the output of your selected script:
