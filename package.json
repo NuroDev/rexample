@@ -1,6 +1,6 @@
 {
   "name": "rexample",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Simple CLI to execute & run scripts",
   "repository": {
     "type": "git",
