@@ -58,8 +58,17 @@ async function main() {
       },
       write: false,
     });
+    if (!builtModule.outputFiles)
+      throw new Error("No output files found from built module.");
 
-    const mod = eval(builtModule.outputFiles![0].text);
+    const [module] = builtModule.outputFiles;
+
+    const mod = eval(module.text);
+    if (!mod.default && typeof mod !== "function")
+      throw new Error(
+        "Unable to run example. No `default` export or function found to run. Check you are exporting a function or using `export default`."
+      );
+
     if (typeof mod === "function") {
       await mod();
     } else {
