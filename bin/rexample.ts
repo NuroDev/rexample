@@ -15,8 +15,8 @@ async function main() {
 
   const examplesDirectoryPath = join(cwd, "examples");
   const exampleFiles = readdirSync(examplesDirectoryPath)
-    .filter((i) => i.endsWith(".ts")) // TODO: Support .js, .mjs, .cjs, etc.
-    .map((i) => parsePath(join(examplesDirectoryPath, i)));
+    .map((i) => parsePath(join(examplesDirectoryPath, i)))
+    .filter(({ ext }) => [".js", ".cjs", ".ts", ".cts"].includes(ext));
 
   if (exampleFiles.length <= 0)
     throw new Error("No example scripts available to run.");
