@@ -19,6 +19,11 @@
     "cli",
     "typescript"
   ],
+  "files": [
+    "dist/**/*",
+    "LICENSE",
+    "README.md"
+  ],
   "license": "MIT",
   "bin": {
     "rexample": "dist/index.js"
