@@ -256,7 +256,7 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
-esbuild@^0.17.6:
+esbuild@^0.17.11, esbuild@^0.17.6:
   version "0.17.11"
   resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.17.11.tgz#9f3122643b21d7e7731e42f18576c10bfa28152b"
   integrity sha512-pAMImyokbWDtnA/ufPxjQg0fYo2DDuzAlqwnDvbXqHLphe+m80eF++perYKVm8LeTuj2zUuFXC+xgSVxyoHUdg==
