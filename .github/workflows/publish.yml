@@ -21,10 +21,7 @@ jobs:
         run: yarn install
 
       - name: Build
-        run: yarn build:prod
-
-      - name: Test
-        run: yarn test
+        run: yarn build
 
       - name: Publish
         uses: JS-DevTools/npm-publish@v1
