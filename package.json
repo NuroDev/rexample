@@ -25,9 +25,7 @@
     "README.md"
   ],
   "license": "MIT",
-  "bin": {
-    "rexample": "dist/index.js"
-  },
+  "bin": "dist/index.js",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "scripts": {
