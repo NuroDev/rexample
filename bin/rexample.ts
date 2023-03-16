@@ -45,7 +45,7 @@ async function main() {
       readFileSync(absolutePath, "utf-8"),
       {
         format: "cjs",
-        loader: "jsx",
+        loader: "tsx",
       }
     );
 
