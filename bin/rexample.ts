@@ -1,7 +1,7 @@
 import esbuild from "esbuild";
 import prompts from "prompts";
 import { capitalize } from "radash";
-import { readdirSync, readFileSync } from "fs";
+import { existsSync, readdirSync, readFileSync } from "fs";
 import { join, parse as parsePath } from "path";
 
 import type { Choice } from "prompts";
@@ -10,14 +10,16 @@ import type { ParsedPath } from "path";
 async function main() {
   const cwd = process.cwd();
 
-  // TODO: Check if an examples directory already exists.
+  if (!existsSync(join(cwd, "examples")))
+    throw new Error('No "examples" directory found.');
 
   const examplesDirectoryPath = join(cwd, "examples");
   const exampleFiles = readdirSync(examplesDirectoryPath)
     .filter((i) => i.endsWith(".ts")) // TODO: Support .js, .mjs, .cjs, etc.
     .map((i) => parsePath(join(examplesDirectoryPath, i)));
 
-  // TODO: If no examples, exit early with a warning.
+  if (exampleFiles.length <= 0)
+    throw new Error("No example scripts available to run.");
 
   const choices = exampleFiles.map(
     (file): Choice => ({
@@ -34,7 +36,7 @@ async function main() {
       name: "rawPath",
       type: "autocomplete",
     });
-    if (!rawPath) return; // TODO: Better handling of this error.
+    if (!rawPath) throw new Error("No or invalid example file path.");
 
     const path = rawPath as ParsedPath;
     const absolutePath = join(path.dir, path.base);
