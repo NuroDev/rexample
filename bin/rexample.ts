@@ -57,8 +57,12 @@ async function main() {
       write: false,
     });
 
-    const { default: mainFunc } = eval(builtModule.outputFiles![0].text);
-    await mainFunc();
+    const mod = eval(builtModule.outputFiles![0].text);
+    if (typeof mod === "function") {
+      await mod();
+    } else {
+      await mod?.default();
+    }
   } catch (error) {
     throw error;
   }
