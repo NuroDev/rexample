@@ -23,9 +23,12 @@
   "bin": {
     "rexample": "dist/index.js"
   },
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "scripts": {
     "dev": "yarn build --watch",
-    "build": "rimraf dist && tsup"
+    "build": "rimraf dist && tsup",
+    "start": "node ./dist/index.js"
   },
   "dependencies": {
     "esbuild": "^0.17.11",
