@@ -1,6 +1,7 @@
 import esbuild from "esbuild";
-import { readdirSync, readFileSync } from "fs";
 import prompts from "prompts";
+import { capitalize } from "radash";
+import { readdirSync, readFileSync } from "fs";
 import { join, parse as parsePath } from "path";
 
 import type { Choice } from "prompts";
@@ -21,7 +22,7 @@ async function main() {
   const choices = exampleFiles.map(
     (file): Choice => ({
       description: join("examples", file.base),
-      title: file.name,
+      title: capitalize(file.name),
       value: file,
     })
   );
